@@ -1,16 +1,32 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const AppwithRouter =()=>(
-    <BrowserRouter>
-        <App/>
-    </BrowserRouter>
+export const BACKEND_URL = "https://ten-day-2021.herokuapp.com"
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            queryFn: ({ queryKey }) => {
+                return axios.get(BACKEND_URL + queryKey[0], { withCredentials: true })
+            }
+        }
+    }
+})
+
+const AppwithRouter = () => (
+    <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </QueryClientProvider>
 )
 
-ReactDOM.render(<AppwithRouter/>,document.getElementById('root'));
+ReactDOM.render(<AppwithRouter />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
