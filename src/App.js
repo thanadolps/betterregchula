@@ -30,7 +30,7 @@ const EducateResult = () => <div className="heading">ผลการเรีย
 
 function App() {
 
-  const { data: user, isLoading } = useUserInfo()
+  const { data: user, isLoading, error2 } = useUserInfo()
   const { mutateAsync: login, error } = useLogin();
   const { mutateAsync: logout } = useLogout();
 
@@ -53,12 +53,15 @@ function App() {
   }
 
   const Logout = () => {
-    logout().catch(err => console.error(err))
+    logout().then(() => global.location.reload()).catch(err => {
+      console.error(err);
+      global.location.reload();
+    })
   }
 
   return (
     <div className="Appcontainer">
-      {(user && !error) ? (
+      {(user && !error && !error2) ? (
         <Router>
           <Route path="/Home" component={Home} />
           <Route path="/information" component={information} />
