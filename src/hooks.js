@@ -129,3 +129,7 @@ export function useDropSubject() {
         }
     })
 }
+
+export function useBuildings(q, n) {
+    return useQuery(["/building", { q, n }])
+}

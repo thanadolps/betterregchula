@@ -14,11 +14,11 @@ import axios from "axios";
 import { BACKEND_URL } from ".";
 import RegistrationResult from "./components/RegistrationResult";
 import CourseWithdraw from "./components/CourseWithdraw";
+import CourseSchedule from "./components/CourseSchedule";
+import Building from "./components/Building";
 
 const information = () => <div className="heading"></div>
-const CourseSchedule = () => <div className="heading">ตารางสอน</div>
 const ExamSchedule = () => <div className="heading">ตารางสอบ</div>
-const building = () => <div className="heading">รหัสอาคาร</div>
 const Faculty = () => <div className="heading">รหัสคณะ</div>
 const document = () => <div className="heading"></div>
 const JT19 = () => <div className="heading">จท19</div>
@@ -64,7 +64,7 @@ function App() {
           <Route path="/information" component={information} />
           <Route path="/information/CourseSchedule" component={CourseSchedule} />
           <Route path="/information/ExamSchedule" component={ExamSchedule} />
-          <Route path="/information/building" component={building} />
+          <Route path="/information/building" component={Building} />
           <Route path="/information/Faculty" component={Faculty} />
           <Route path="/document" component={document} />
           <Route path="/document/JT19" component={JT19} />

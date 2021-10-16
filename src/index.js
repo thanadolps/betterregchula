@@ -12,7 +12,10 @@ const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             queryFn: async ({ queryKey }) => {
-                const response = await axios.get(BACKEND_URL + queryKey[0], { withCredentials: true });
+                const response = await axios.get(BACKEND_URL + queryKey[0], {
+                    withCredentials: true,
+                    params: queryKey[1]
+                });
                 return response.data;
             }
         }
