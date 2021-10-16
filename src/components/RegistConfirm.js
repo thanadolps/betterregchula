@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react"
-import"../App.css";
-import"./Registration.css";
-import"./RegistConfirm.css";
+import "../App.css";
+import "./Registration.css";
+import "./RegistConfirm.css";
 
 import ContentBox from "./ContentBox";
 
@@ -31,28 +31,28 @@ var chosenCourses = [
 
 
 const chosenCoursesCtx = createContext();
-const RegistConfirm=()=>{ //-----------main-------------------------------------------------------------//
+const RegistConfirm = () => { //-----------main-------------------------------------------------------------//
     var [nowChosens, setNowChosens] = useState([]); // global in this app for list of chosen courses
 
-    var CourseRow_list = chosenCourses.map((courseData, index) => <CourseRow courseData={courseData} index={index+1}/>);
+    var CourseRow_list = chosenCourses.map((courseData, index) => <CourseRow courseData={courseData} index={index + 1} />);
 
-    return(
-    <chosenCoursesCtx.Provider value={{get: nowChosens, set: setNowChosens}}>
-        <div className="heading">รายวิชาที่ต้องการลงทะเบียนเรียน</div>    
-        <ContentBox title="รายวิชาที่ต้องการลงทะเบียนเรียน" content={
-            <>
-            <TableCtn content={CourseRow_list}/>             
-            
-            </>
-        }/>
-            
-    </chosenCoursesCtx.Provider>
+    return (
+        <chosenCoursesCtx.Provider value={{ get: nowChosens, set: setNowChosens }}>
+            <div className="heading">รายวิชาที่ต้องการลงทะเบียนเรียน</div>
+            <ContentBox title="รายวิชาที่ต้องการลงทะเบียนเรียน" content={
+                <>
+                    <TableCtn content={CourseRow_list} />
+
+                </>
+            } />
+
+        </chosenCoursesCtx.Provider>
     )
 }
 
 //--------------------------------------------------------------//
-const TableCtn = (props) =>{
-    return(
+const TableCtn = (props) => {
+    return (
         <div className="cardCtn" id="cardCtn">
             <table className="table1">
                 <tr>
@@ -65,7 +65,7 @@ const TableCtn = (props) =>{
                 </tr>
                 {props.content}
             </table>
-            
+
         </div>
     )
 }
@@ -73,7 +73,7 @@ const TableCtn = (props) =>{
 const CourseRow = (props) => {
     const courseData = props.courseData;
 
-    return(
+    return (
         <tr>
             <td>{props.index}</td>
             <td>{courseData.courseNo}</td>

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import "../App.css";
-import {SidebarData} from './SidebarData'
+import { SidebarData } from './SidebarData'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
-import {FaBars} from 'react-icons/fa';
-import {IoArrowBack} from 'react-icons/io5';
+import { Link } from 'react-router-dom'
+import { FaBars } from 'react-icons/fa';
+import { IoArrowBack } from 'react-icons/io5';
 import SubMenu from "./SubMenu";
-import {BiLogOut} from 'react-icons/bi';
+import { BiLogOut } from 'react-icons/bi';
 
 import { useHistory } from "react-router-dom";
 
 //ส่วนรอบปุ่ม
-const Nav=styled.div`
+const Nav = styled.div`
     background:#5B5B5B;
     width:80px;
     height: 100%;
@@ -22,7 +22,7 @@ const Nav=styled.div`
 `;
 
 //ไอคอนกดเปิดปิด
-const NavIcon=styled(Link)`
+const NavIcon = styled(Link)`
     margin-left:2rem;
     font-size:1rem;
     height:80px;
@@ -40,53 +40,53 @@ const SidebarNav = styled.nav`
     justify-content:center;
     position:fixed;
     top:0;
-    left:${({ sidebar})=>(sidebar ? '0' :'-100%')};
+    left:${({ sidebar }) => (sidebar ? '0' : '-100%')};
     transition:350ms;
     z-index:10;
 `;
 
-const SideberWrap=styled.nav`
+const SideberWrap = styled.nav`
     width:100%;
 `;
 
 
 
-const StudentID="6400000021"
-const Name="Firstname Lastname"
+const StudentID = "6400000021"
+const Name = "Firstname Lastname"
 
 
-const Sidebar=({Logout})=>{
-    const[sidebar,setSidebar]=useState(false)
-    const showSidebar=()=>setSidebar(!sidebar)
+const Sidebar = ({ Logout }) => {
+    const [sidebar, setSidebar] = useState(false)
+    const showSidebar = () => setSidebar(!sidebar)
 
- 
-// const Logout = () =>{ 
-//     let history = useHistory();
-//     let path = `.src/App`; 
-//     history.push(path);
-// }
-        
-    return(
+
+    // const Logout = () =>{ 
+    //     let history = useHistory();
+    //     let path = `.src/App`; 
+    //     history.push(path);
+    // }
+
+    return (
         <>
             <Nav>
                 <NavIcon to="#">
-                    <FaBars onClick={showSidebar}/>
+                    <FaBars onClick={showSidebar} />
                 </NavIcon>
             </Nav>
             <SidebarNav sidebar={sidebar}>
                 <SideberWrap>
                     <NavIcon to="#">
-                        <IoArrowBack onClick={showSidebar}/>
+                        <IoArrowBack onClick={showSidebar} />
                     </NavIcon>
                     <div className="UserProfile">
-                        {StudentID} 
+                        {StudentID}
                         {Name}
                     </div>
-                        {SidebarData.map((item,index)=>{
-                                return <SubMenu item={item} key={index}/>;
+                    {SidebarData.map((item, index) => {
+                        return <SubMenu item={item} key={index} />;
 
-                        })}
-                    <div className="Logout" onClick={Logout}><BiLogOut/></div>
+                    })}
+                    <div className="Logout" onClick={Logout}><BiLogOut /></div>
 
                 </SideberWrap>
             </SidebarNav>

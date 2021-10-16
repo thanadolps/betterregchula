@@ -1,5 +1,5 @@
 import React from "react";
-import {FaBars} from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { AiFillHome } from 'react-icons/ai';
 import { IoInformationCircleSharp } from 'react-icons/io5'
 import { IoDocumentsSharp } from 'react-icons/io5';
@@ -17,8 +17,8 @@ export const SidebarData = [
         title: "ข้อมูลทั่วไป",
         icon: <IoInformationCircleSharp />,
         path: "/information",
-        iconClosed:<RiArrowDownSLine/>,
-        iconOpened:<RiArrowUpSLine/>,
+        iconClosed: <RiArrowDownSLine />,
+        iconOpened: <RiArrowUpSLine />,
         subNav: [
             {
                 title: "ตารางสอน",
@@ -42,8 +42,8 @@ export const SidebarData = [
         title: "เอกสารสำคัญ",
         icon: <IoDocumentsSharp />,
         path: "/document",
-        iconClosed:<RiArrowDownSLine/>,
-        iconOpened:<RiArrowUpSLine/>,
+        iconClosed: <RiArrowDownSLine />,
+        iconOpened: <RiArrowUpSLine />,
         subNav: [
             {
                 title: "จท19",
@@ -67,8 +67,8 @@ export const SidebarData = [
         title: "วิชาเรียน",
         icon: <MdOutlineSubject />,
         path: "/Subject",
-        iconClosed:<RiArrowDownSLine/>,
-        iconOpened:<RiArrowUpSLine/>,
+        iconClosed: <RiArrowDownSLine />,
+        iconOpened: <RiArrowUpSLine />,
         subNav: [
             {
                 title: "ลงทะเบียนเรียน",

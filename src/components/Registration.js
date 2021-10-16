@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react"
-import"../App.css";
-import"./Registration.css";
-import {Link} from 'react-router-dom'
+import "../App.css";
+import "./Registration.css";
+import { Link } from 'react-router-dom'
 import SubMenu from "./SubMenu";
 import ContentBox from "./ContentBox";
 import styled from 'styled-components';
@@ -48,36 +48,36 @@ var received = {
 }
 
 const nowChosensCtx = createContext();
-const Registration=()=>{ //-----------main-------------------------------------------------------------//
+const Registration = () => { //-----------main-------------------------------------------------------------//
     var [nowChosens, setNowChosens] = useState([]); // global in this app for list of chosen courses
 
-    var CourseCard_list = received.courses.map((course) => 
-        <CourseCard courseName={course.name} courseNo={course.No} credits={course.credits} sects={course.sects}/>);
+    var CourseCard_list = received.courses.map((course) =>
+        <CourseCard courseName={course.name} courseNo={course.No} credits={course.credits} sects={course.sects} />);
 
-    return(
-    <nowChosensCtx.Provider value={{get: nowChosens, set: setNowChosens}}>
-        <div className="heading">ลงทะเบียนเรียน</div>    
-        <ContentBox title="ลงทะเบียนเรียน" content={
-            <>
-            <CardCtn content={CourseCard_list}/>             
-            <BasketLabel/>
-            </>
-        }/>
-            
-    </nowChosensCtx.Provider>
+    return (
+        <nowChosensCtx.Provider value={{ get: nowChosens, set: setNowChosens }}>
+            <div className="heading">ลงทะเบียนเรียน</div>
+            <ContentBox title="ลงทะเบียนเรียน" content={
+                <>
+                    <CardCtn content={CourseCard_list} />
+                    <BasketLabel />
+                </>
+            } />
+
+        </nowChosensCtx.Provider>
     )
 }
 
 //--------------------------------------------------------------//
-const CardCtn = (props) =>{
-    return(
+const CardCtn = (props) => {
+    return (
         <div className="cardCtn" id="cardCtn">
             {props.content}
         </div>
     )
 }
 
-const CourseCard = (props={courseName:'Cal I', courseNo:'23101', credits:5}) =>{
+const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5 }) => {
     var [isChosen, setIsChosen] = useState(false);
     const nowChosens = useContext(nowChosensCtx).get;
     const setNowChosens = useContext(nowChosensCtx).set;
@@ -91,8 +91,8 @@ const CourseCard = (props={courseName:'Cal I', courseNo:'23101', credits:5}) =>{
     });
 
     const whenChosen = () => {
-        if(!isChosen){
-            Now.chosens.push(props);            
+        if (!isChosen) {
+            Now.chosens.push(props);
             console.log(Now.chosens);
 
             setNowChosens([...nowChosens, cardData]);
@@ -100,7 +100,7 @@ const CourseCard = (props={courseName:'Cal I', courseNo:'23101', credits:5}) =>{
 
             setIsChosen(true);
         }
-        else{
+        else {
             Now.chosens.splice(Now.chosens.indexOf(props), 1); //deletew 1 items at the index
             console.log(Now.chosens);
 
@@ -115,30 +115,30 @@ const CourseCard = (props={courseName:'Cal I', courseNo:'23101', credits:5}) =>{
 
     const setSect = () => {
         //whenChosen();
-        setCardData({...cardData, selectedSect: q('sectSelect').value});        
+        setCardData({ ...cardData, selectedSect: q('sectSelect').value });
         //whenChosen();
     }
 
-    return(
-    <div className="card">
-        <div style={{flexGrow: 3}}>
-            <p>{props.courseName} {props.courseNo}</p>
+    return (
+        <div className="card">
+            <div style={{ flexGrow: 3 }}>
+                <p>{props.courseName} {props.courseNo}</p>
+            </div>
+            <div style={{ flexGrow: 3 }}>
+                <p>{props.credits} หน่วยกิต</p>
+            </div>
+            <div style={{ flexGrow: 6 }}>
+                <label htmlFor="sectSelect">ตอนเรียน : </label>
+                <select name="section" id="sectSelect" onChange={setSect}>
+                    {props.sects.map((sect) => <option value={sect}>{sect}</option>)}
+                </select>
+            </div>
+            <div style={{ flexGrow: 1 }}>
+                <button className="btn1" onClick={whenChosen}>
+                    {isChosen ? 'เลือกแล้ว' : 'เลือก'}
+                </button>
+            </div>
         </div>
-        <div style={{flexGrow: 3}}>
-            <p>{props.credits} หน่วยกิต</p>
-        </div>
-        <div style={{flexGrow: 6}}>
-            <label htmlFor="sectSelect">ตอนเรียน : </label>
-            <select name="section" id="sectSelect" onChange={setSect}>
-                {props.sects.map((sect) => <option value={sect}>{sect}</option>)}                
-            </select>
-        </div>
-        <div style={{flexGrow: 1}}>
-            <button className="btn1" onClick={whenChosen}>
-                {isChosen ? 'เลือกแล้ว' : 'เลือก'}
-            </button>
-        </div>
-    </div>
     )
 }
 
@@ -146,13 +146,13 @@ const BasketLabel = (props) => {
     //var [chosens, setChosens] = useState(Now.chosens);
     var nowChosens = useContext(nowChosensCtx).get;
     const whenFinished = () => {
-        window.location.href='/Subject/RegistConfirm'
+        window.location.href = '/Subject/RegistConfirm'
     }
 
-    return(
+    return (
         <div className="basKetDiv">
             <p id="totalchosen">เลือกแล้วจำนวน {nowChosens.length} วิชา</p>
-            <ConfirmLink to= '/Subject/RegistConfirm'><button id="buttonchosen" >วิชาที่เลือก</button></ConfirmLink>
+            <ConfirmLink to='/Subject/RegistConfirm'><button id="buttonchosen" >วิชาที่เลือก</button></ConfirmLink>
         </div>
     )
 }

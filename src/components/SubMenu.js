@@ -1,6 +1,6 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const SidebarLink = styled(Link)`
   display: flex;
@@ -56,8 +56,8 @@ const SubMenu = ({ item }) => {
           {item.subNav && subnav
             ? item.iconOpened
             : item.subNav
-            ? item.iconClosed
-            : null}
+              ? item.iconClosed
+              : null}
         </div>
       </SidebarLink>
       {subnav &&
