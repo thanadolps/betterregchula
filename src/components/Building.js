@@ -6,7 +6,8 @@ import { CourseRow, TableCtn } from "./RegistConfirm";
 const Building = () => {
 
     const [search, setSearch] = useState();
-    const { data: _buildings } = useBuildings(search);
+    const [querySearch, setQuerySearch] = useState();
+    const { data: _buildings } = useBuildings(querySearch);
 
     const buildings = _buildings ?? []
     // if (buildings === undefined) { return null; }
@@ -26,12 +27,12 @@ const Building = () => {
         <div className="heading">รหัสอาคาร</div>
         <ContentBox title="รหัสอาคาร" content={
             <>
-                <div style={{ textAlign: "center", marginTop: "32px", marginBottom: "-16px" }}>
+                <div style={{ textAlign: "center", marginTop: "32px" }}>
                     <input style={{ border: "1px solid gray" }} value={search} onChange={handleChange}></input>
                     &nbsp;
-                    <button style={{ cursor: "pointer" }}>Submit</button>
+                    <button style={{ cursor: "pointer" }} onClick={() => setQuerySearch(search)}>Submit</button>
                 </div>
-                <div className="cardCtn" id="cardCtn">
+                <div className="cardCtn" id="cardCtn" style={{ maxHeight: "80vh", overflow: "scroll" }}>
                     <table className="table1">
                         <tr>
                             <th>CODE</th>
