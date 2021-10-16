@@ -133,3 +133,7 @@ export function useDropSubject() {
 export function useBuildings(q, n) {
     return useQuery(["/building", { q, n }])
 }
+
+export function useLearnSchedule() {
+    return useQuery(["/schedule/user/learn"])
+}
