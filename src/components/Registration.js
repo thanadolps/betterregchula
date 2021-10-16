@@ -8,8 +8,8 @@ import styled from 'styled-components';
 import { useListSubjects, usePendingSubject, useSetPendingSubject } from "../hooks";
 
 const ConfirmLink = styled(Link)`
-color:blue;
-
+margin-top:auto;
+margin-bottom:auto;
 `
 var q = (id) => document.getElementById(id)
 

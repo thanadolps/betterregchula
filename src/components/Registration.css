@@ -64,7 +64,5 @@
 
 .basKetDiv #buttonchosen{
     color:#3d4468;
-    position: absolute;
-    bottom:47px;
     cursor: pointer;
 }
