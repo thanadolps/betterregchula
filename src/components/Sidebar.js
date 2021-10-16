@@ -9,6 +9,7 @@ import SubMenu from "./SubMenu";
 import { BiLogOut } from 'react-icons/bi';
 
 import { useHistory } from "react-router-dom";
+import { useUserInfo } from "../hooks";
 
 //ส่วนรอบปุ่ม
 const Nav = styled.div`
@@ -51,19 +52,16 @@ const SideberWrap = styled.nav`
 
 
 
-const StudentID = "6400000021"
-const Name = "Firstname Lastname"
-
-
 const Sidebar = ({ Logout }) => {
     const [sidebar, setSidebar] = useState(false)
     const showSidebar = () => setSidebar(!sidebar)
 
+    const { data: user } = useUserInfo()
 
     // const Logout = () =>{ 
     //     let history = useHistory();
     //     let path = `.src/App`; 
-    //     history.push(path);
+    //     history.push(path); 
     // }
 
     return (
@@ -79,8 +77,8 @@ const Sidebar = ({ Logout }) => {
                         <IoArrowBack onClick={showSidebar} />
                     </NavIcon>
                     <div className="UserProfile">
-                        {StudentID}
-                        {Name}
+                        {user ? user.id : "6XXXXXXXXX"}
+                        {user && user.name}
                     </div>
                     {SidebarData.map((item, index) => {
                         return <SubMenu item={item} key={index} />;
