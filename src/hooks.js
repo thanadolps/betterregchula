@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { BACKEND_URL } from ".";
 
 export function useUserInfo() {
-    const res = useQuery("/user/info", { retry: false });
+    const res = useQuery(["/user/info", { field_as_object: true }], { retry: false });
     return res
 }
 

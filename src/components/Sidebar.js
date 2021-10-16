@@ -77,8 +77,9 @@ const Sidebar = ({ Logout }) => {
                         <IoArrowBack onClick={showSidebar} />
                     </NavIcon>
                     <div className="UserProfile">
-                        {user ? user.id : "6XXXXXXXXX"}
-                        {user && user.name}
+                        {user ? user.id : "6XXXXXXXXX"} &nbsp;
+                        {user && user.name} <br></br>
+                        {user.field.name_english}
                     </div>
                     {SidebarData.map((item, index) => {
                         return <SubMenu item={item} key={index} />;

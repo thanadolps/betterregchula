@@ -44,10 +44,6 @@ function App() {
     return error?.message || "An Error Occured";
   }, [error])
 
-  if (isLoading) {
-    return null;
-  }
-
   const Login = (details) => {
     login(details).catch(err => console.error(err))
   }
