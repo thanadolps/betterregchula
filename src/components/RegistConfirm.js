@@ -4,7 +4,7 @@ import "./Registration.css";
 import "./RegistConfirm.css";
 
 import ContentBox from "./ContentBox";
-import { usePendingSubject } from "../hooks";
+import { usePendingSubject, useSetPendingSubject } from "../hooks";
 
 var q = (id) => document.getElementById(id)
 
@@ -36,10 +36,18 @@ var chosenCourses = [
 const chosenCoursesCtx = createContext();
 const RegistConfirm = () => { //-----------main-------------------------------------------------------------//
     const { data: chosenCourses, isLoading } = usePendingSubject();
+    const { mutate: setPendingSubject } = useSetPendingSubject();
     if (isLoading) { return null; }
 
     const CourseRow_list =
-        chosenCourses.map((courseData, index) => <CourseRow courseData={courseData} index={index + 1} />);
+        chosenCourses.map((courseData, index) => <CourseRow key={courseData.subject.id} courseData={courseData} index={index + 1}
+            onDeleteClick={() => {
+                const out_sub =
+                    chosenCourses.map(x => ({ subject_id: x.subject.id, number: x.number, year: 2021 }));
+                out_sub.splice(index, 1); //deletew 1 items at the index
+                console.log(out_sub);
+                setPendingSubject(out_sub);
+            }} />);
 
     return (
         <chosenCoursesCtx.Provider value={{}}>
