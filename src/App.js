@@ -12,6 +12,7 @@ import Registration from "./components/Registration";
 import { useLogin, useLogout, useUserInfo } from "./hooks";
 import axios from "axios";
 import { BACKEND_URL } from ".";
+import RegistrationResult from "./components/RegistrationResult";
 
 const information = () => <div className="heading"></div>
 const CourseSchedule = () => <div className="heading">ตารางสอน</div>
@@ -26,7 +27,6 @@ const StudentPersonalRecords = () => <div className="heading">ทะเบีย
 const Subject = () => <div className="heading"></div>
 
 const CourseWithdraw = () => <div className="heading">ถอนรายวิชา</div>
-const RegistrationResult = () => <div className="heading">ผลการลงทะเบียนเรียน</div>
 const EducateResult = () => <div className="heading">ผลการเรียน</div>
 
 function App() {

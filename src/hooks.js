@@ -100,3 +100,7 @@ export function useSetPendingSubject() {
         }
     })
 }
+
+export function useRegisteredSubject() {
+    return useQuery("/register/subjects")
+}

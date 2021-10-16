@@ -56,7 +56,7 @@ const RegistConfirm = () => { //-----------main---------------------------------
 }
 
 //--------------------------------------------------------------//
-const TableCtn = (props) => {
+export const TableCtn = (props) => {
     return (
         <div className="cardCtn" id="cardCtn">
             <table className="table1">
@@ -75,7 +75,7 @@ const TableCtn = (props) => {
     )
 }
 
-const CourseRow = (props) => {
+export const CourseRow = (props) => {
     const courseData = props.courseData;
 
     return (
