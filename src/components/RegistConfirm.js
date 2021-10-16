@@ -85,7 +85,7 @@ export const CourseRow = (props) => {
             <td>{courseData.subject.name_english}</td>
             <td>{courseData.number}</td>
             <td>{courseData.subject.credit}</td>
-            {props?.noDelete || <td><button>ลบ</button></td>}
+            {props?.noDelete || <td><button style={{ cursor: "pointer" }} onClick={props.onDeleteClick}>ลบ</button></td>}
         </tr>
     )
 }

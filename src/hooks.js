@@ -60,7 +60,9 @@ export function useSetPendingSubject() {
             { withCredentials: true }
         )
     }, {
-        onMutate: (subjectsID) => {
+        onMutate: async (subjectsID) => {
+            await queryClient.cancelQueries("/register/pending")
+
             // Speculative Updating
             const subject_list = queryClient.getQueryData("/info/subjects");
             queryClient.setQueryData("/register/pending", subjects => {
@@ -103,4 +105,27 @@ export function useSetPendingSubject() {
 
 export function useRegisteredSubject() {
     return useQuery("/register/subjects")
+}
+
+export function useDropSubject() {
+    const queryClient = useQueryClient()
+
+    return useMutation((subject_id) => {
+        return axios.delete(
+            BACKEND_URL + "/register/subjects",
+            { withCredentials: true, params: { subject_id } }
+        )
+    }, {
+        onMutate: async (subject_id) => {
+            await queryClient.cancelQueries("/register/subjects")
+
+            queryClient.setQueryData(
+                "/register/subjects",
+                subjects => subjects.filter(s => s.subject_id != subject_id)
+            )
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries("/register/subjects")
+        }
+    })
 }

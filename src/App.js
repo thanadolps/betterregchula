@@ -13,6 +13,7 @@ import { useLogin, useLogout, useUserInfo } from "./hooks";
 import axios from "axios";
 import { BACKEND_URL } from ".";
 import RegistrationResult from "./components/RegistrationResult";
+import CourseWithdraw from "./components/CourseWithdraw";
 
 const information = () => <div className="heading"></div>
 const CourseSchedule = () => <div className="heading">ตารางสอน</div>
@@ -25,8 +26,6 @@ const CR20CR20G = () => <div className="heading">จท20</div>
 const CertificateofStudentStatus = () => <div className="heading">หลักฐานรับรองแสดงสถานภาพการเป็นนิสิต</div>
 const StudentPersonalRecords = () => <div className="heading">ทะเบียนชื่อ</div>
 const Subject = () => <div className="heading"></div>
-
-const CourseWithdraw = () => <div className="heading">ถอนรายวิชา</div>
 const EducateResult = () => <div className="heading">ผลการเรียน</div>
 
 function App() {

@@ -10,7 +10,7 @@ const RegistrationResult = () => {
     }
 
     const CourseRow_list =
-        courses.map((courseData, index) => <CourseRow courseData={courseData} index={index + 1} noDelete={true} />);
+        courses.map((courseData, index) => <CourseRow key={courseData.subject.id} courseData={courseData} index={index + 1} noDelete={true} />);
 
     return <>
         <div className="heading">ผลการลงทะเบียนเรียน</div>
