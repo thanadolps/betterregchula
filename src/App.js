@@ -31,7 +31,7 @@ const EducateResult = () => <div className="heading">ผลการเรีย
 
 function App() {
 
-  const { data: user, loading } = useUserInfo()
+  const { data: user, isLoading } = useUserInfo()
   const { mutateAsync: login, error } = useLogin();
   const { mutateAsync: logout } = useLogout();
 
@@ -45,7 +45,7 @@ function App() {
     return error?.message || "An Error Occured";
   }, [error])
 
-  if (loading) {
+  if (isLoading) {
     return null;
   }
 

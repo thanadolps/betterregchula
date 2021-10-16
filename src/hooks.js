@@ -4,7 +4,7 @@ import { BACKEND_URL } from ".";
 
 export function useUserInfo() {
     const res = useQuery("/user/info", { retry: false });
-    return { ...res, data: res.error ? null : res.data }
+    return res
 }
 
 export function useLogin() {

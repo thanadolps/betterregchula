@@ -11,8 +11,9 @@ export const BACKEND_URL = "https://ten-day-2021.herokuapp.com"
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            queryFn: ({ queryKey }) => {
-                return axios.get(BACKEND_URL + queryKey[0], { withCredentials: true })
+            queryFn: async ({ queryKey }) => {
+                const response = await axios.get(BACKEND_URL + queryKey[0], { withCredentials: true });
+                return response.data;
             }
         }
     }
