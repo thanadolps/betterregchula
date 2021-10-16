@@ -11,13 +11,14 @@ const ConfirmLink = styled(Link)`
 margin-top:auto;
 margin-bottom:auto;
 `
+/*
 var q = (id) => document.getElementById(id)
 
 var Now = {
     chosens: [],
     searched: ''
 };
-
+*/
 //-------------------ลองข้อมูล----------------//
 /*
 var received = {
@@ -87,8 +88,6 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
     const { subjects, pending_subjects, registed_subjects } = useContext(nowChosensCtx);
     const { mutate: setPendingSubject } = useSetPendingSubject();
     const [sec, setSec] = useState(props.sects[0])
-    // const nowChosens = useContext(nowChosensCtx).get;
-    // const setNowChosens = useContext(nowChosensCtx).set;
     const isRegistered = useMemo(() => {
         return registed_subjects.find(x => x.subject_id === props.courseNo) !== undefined;
     },
@@ -112,7 +111,6 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
             setPendingSubject(out_sub);
         }
         else {
-
             out_sub.splice(pending_subjects.indexOf(props), 1); //deletew 1 items at the index
             console.log(out_sub);
             setPendingSubject(out_sub);
@@ -148,13 +146,16 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
     )
 }
 
-const BasketLabel = (props) => {
+const BasketLabel = () => {
     const { data: pending_subjects } = usePendingSubject();
 
     return (
         <div className="basKetDiv">
             <p id="totalchosen">เลือกแล้วจำนวน {pending_subjects?.length ?? 0} วิชา</p>
-            <ConfirmLink to='/Subject/RegistConfirm'><button id="buttonchosen" >วิชาที่เลือก</button></ConfirmLink>
+            {pending_subjects.length > 0 ?
+                <ConfirmLink to='/Subject/RegistConfirm'><button id="buttonchosen" >วิชาที่เลือก</button></ConfirmLink>
+                : <button id="buttonchosen" style={{ cursor: "auto", color: "gray" }}>ไม่มีวิชาที่เลือก</button>
+            }
         </div>
     )
 }

@@ -10,13 +10,13 @@ const RegistrationResult = () => {
     }
 
     const CourseRow_list =
-        courses.map((courseData, index) => <CourseRow courseData={courseData} index={index + 1} />);
+        courses.map((courseData, index) => <CourseRow courseData={courseData} index={index + 1} noDelete={true} />);
 
     return <>
         <div className="heading">ผลการลงทะเบียนเรียน</div>
         <ContentBox title="ผลการลงทะเบียนเรียน" content={
             <>
-                <TableCtn content={CourseRow_list} />
+                <TableCtn content={CourseRow_list} noDelete={true} />
 
             </>
         } />

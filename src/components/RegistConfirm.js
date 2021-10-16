@@ -66,7 +66,7 @@ export const TableCtn = (props) => {
                     <th>ชื่อย่อรายวิชา</th>
                     <th>ตอนเรียน</th>
                     <th>หน่วยกิต</th>
-                    <th className="invisCell"></th>
+                    {props?.noDelete || <th className="invisCell"></th>}
                 </tr>
                 {props.content}
             </table>
@@ -85,7 +85,7 @@ export const CourseRow = (props) => {
             <td>{courseData.subject.name_english}</td>
             <td>{courseData.number}</td>
             <td>{courseData.subject.credit}</td>
-            <td><button>ลบ</button></td>
+            {props?.noDelete || <td><button>ลบ</button></td>}
         </tr>
     )
 }
