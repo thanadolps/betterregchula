@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import SubMenu from "./SubMenu";
 import ContentBox from "./ContentBox";
 import styled from 'styled-components';
-import { useListSubjects, usePendingSubject, useSetPendingSubject } from "../hooks";
+import { useListSubjects, usePendingSubject, useRegisteredSubject, useSetPendingSubject } from "../hooks";
 
 const ConfirmLink = styled(Link)`
 margin-top:auto;
@@ -51,17 +51,17 @@ var received = {
 
 const nowChosensCtx = createContext();
 const Registration = () => { //-----------main-------------------------------------------------------------//
-    var [nowChosens, setNowChosens] = useState([]); // global in this app for list of chosen courses
     const { data: subjects } = useListSubjects();
     const { data: pending_subjects } = usePendingSubject();
+    const { data: registed_subjects } = useRegisteredSubject();
 
-    if (subjects === undefined || pending_subjects === undefined) { return null; }
+    if (subjects === undefined || pending_subjects === undefined || registed_subjects === undefined) { return null; }
 
     var CourseCard_list = subjects.map((course) =>
         <CourseCard key={course.id} courseName={course.name_english} courseNo={course.id} credits={course.credit} sects={course.sections} />);
 
     return (
-        <nowChosensCtx.Provider value={{ get: nowChosens, set: setNowChosens, subjects, pending_subjects }}>
+        <nowChosensCtx.Provider value={{ subjects, pending_subjects, registed_subjects }}>
             <div className="heading">ลงทะเบียนเรียน</div>
             <ContentBox title="ลงทะเบียนเรียน" content={
                 <>
@@ -84,12 +84,21 @@ const CardCtn = (props) => {
 }
 
 const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5, sects: [1] }) => {
-    const { subjects, pending_subjects } = useContext(nowChosensCtx);
+    const { subjects, pending_subjects, registed_subjects } = useContext(nowChosensCtx);
     const { mutate: setPendingSubject } = useSetPendingSubject();
     const [sec, setSec] = useState(props.sects[0])
     // const nowChosens = useContext(nowChosensCtx).get;
     // const setNowChosens = useContext(nowChosensCtx).set;
-    const choosen = pending_subjects.find(x => x.subject.id == props.courseNo)
+    const isRegistered = useMemo(() => {
+        return registed_subjects.find(x => x.subject_id === props.courseNo) !== undefined;
+    },
+        [registed_subjects]
+    )
+
+    const choosen = useMemo(() =>
+        pending_subjects.find(x => x.subject.id === props.courseNo),
+        [pending_subjects]
+    )
 
     const whenChosen = () => {
         const out_sub =
@@ -131,8 +140,8 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
                 </select>
             </div>
             <div style={{ flexGrow: 1 }}>
-                <button className="btn1" onClick={whenChosen}>
-                    {choosen ? 'เลือกแล้ว' : 'เลือก'}
+                <button className="btn1" onClick={whenChosen} disabled={isRegistered}>
+                    {isRegistered ? 'ลงแล้ว' : choosen ? 'เลือกแล้ว' : 'เลือก'}
                 </button>
             </div>
         </div>

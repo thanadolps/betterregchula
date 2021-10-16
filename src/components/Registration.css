@@ -46,7 +46,12 @@
     font-family: Kanit;
 }
 
-.btn1:hover {
+.btn1:disabled {
+    background-color: gray;
+    transition: none;
+}
+
+.btn1:hover:not([disabled]) {
     background-color: #0e0f16;
     transition-duration: 0.8s;
 }
