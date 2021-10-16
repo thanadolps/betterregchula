@@ -17,7 +17,10 @@ const CourseWithdraw = () => {
             courseData={courseData}
             index={index + 1}
             onDeleteClick={() => {
-                const name = prompt(`You are withdrawing "${courseData.subject.name_english}"\nPlease type the subject name to confirm withdraw`).trim()
+                const name = prompt(`You are withdrawing "${courseData.subject.name_english}"\nPlease type the subject name to confirm withdraw`)?.trim()
+                if (name === null || name === undefined) {
+                    return;
+                }
                 if (name != courseData.subject.name_english) {
                     alert("Wrong name")
                     return;
