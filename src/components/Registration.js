@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useState } from "react"
+import React, { createContext, useContext, useMemo, useState } from "react"
 import "../App.css";
 import "./Registration.css";
 import { Link } from 'react-router-dom'
 import SubMenu from "./SubMenu";
 import ContentBox from "./ContentBox";
 import styled from 'styled-components';
+import { useListSubjects, usePendingSubject, useSetPendingSubject } from "../hooks";
 
 const ConfirmLink = styled(Link)`
 color:blue;
@@ -18,6 +19,7 @@ var Now = {
 };
 
 //-------------------ลองข้อมูล----------------//
+/*
 var received = {
     courses: [{
         name: 'Calculus I',
@@ -45,17 +47,21 @@ var received = {
         No: '2398765',
         sects: ['only']
     }]
-}
+}*/
 
 const nowChosensCtx = createContext();
 const Registration = () => { //-----------main-------------------------------------------------------------//
     var [nowChosens, setNowChosens] = useState([]); // global in this app for list of chosen courses
+    const { data: subjects } = useListSubjects();
+    const { data: pending_subjects } = usePendingSubject();
 
-    var CourseCard_list = received.courses.map((course) =>
-        <CourseCard courseName={course.name} courseNo={course.No} credits={course.credits} sects={course.sects} />);
+    if (subjects === undefined || pending_subjects === undefined) { return null; }
+
+    var CourseCard_list = subjects.map((course) =>
+        <CourseCard key={course.id} courseName={course.name_english} courseNo={course.id} credits={course.credit} sects={course.sections} />);
 
     return (
-        <nowChosensCtx.Provider value={{ get: nowChosens, set: setNowChosens }}>
+        <nowChosensCtx.Provider value={{ get: nowChosens, set: setNowChosens, subjects, pending_subjects }}>
             <div className="heading">ลงทะเบียนเรียน</div>
             <ContentBox title="ลงทะเบียนเรียน" content={
                 <>
@@ -77,46 +83,37 @@ const CardCtn = (props) => {
     )
 }
 
-const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5 }) => {
-    var [isChosen, setIsChosen] = useState(false);
-    const nowChosens = useContext(nowChosensCtx).get;
-    const setNowChosens = useContext(nowChosensCtx).set;
-    console.log('nowChosens', nowChosens)
-
-    const [cardData, setCardData] = useState({
-        courseName: props.courseName,
-        courseNo: props.courseNo,
-        credits: props.credits,
-        selectedSect: props.sects[0]
-    });
+const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5, sects: [1] }) => {
+    const { subjects, pending_subjects } = useContext(nowChosensCtx);
+    const { mutate: setPendingSubject } = useSetPendingSubject();
+    const [sec, setSec] = useState(props.sects[0])
+    // const nowChosens = useContext(nowChosensCtx).get;
+    // const setNowChosens = useContext(nowChosensCtx).set;
+    const choosen = pending_subjects.find(x => x.subject.id == props.courseNo)
 
     const whenChosen = () => {
-        if (!isChosen) {
-            Now.chosens.push(props);
-            console.log(Now.chosens);
-
-            setNowChosens([...nowChosens, cardData]);
-            //console.log('nowChosens from ctx', nowChosens);
-
-            setIsChosen(true);
+        const out_sub =
+            pending_subjects.map(x => ({ subject_id: x.subject.id, number: x.number, year: 2021 }));
+        if (!choosen) {
+            out_sub.push({
+                subject_id: props.courseNo,
+                number: sec,
+                year: 2021
+            })
+            setPendingSubject(out_sub);
         }
         else {
-            Now.chosens.splice(Now.chosens.indexOf(props), 1); //deletew 1 items at the index
-            console.log(Now.chosens);
 
-            let newChosensList = [...nowChosens] // ทำ arr ใหม่เพื่อลบออก //.splice ลบในตัวเอง ส่งกลับค่าที่ถูกลบ
-            newChosensList.splice(nowChosens.indexOf(cardData, 1));
-            setNowChosens(newChosensList);
-            //console.log('nowChosens from ctx', nowChosens);
-
-            setIsChosen(false);
+            out_sub.splice(pending_subjects.indexOf(props), 1); //deletew 1 items at the index
+            console.log(out_sub);
+            setPendingSubject(out_sub);
         }
     }
 
-    const setSect = () => {
-        //whenChosen();
-        setCardData({ ...cardData, selectedSect: q('sectSelect').value });
-        //whenChosen();
+    const sortedSec = useMemo(() => [...props.sects].sort(), [props.sects])
+
+    const handleSecChange = (ev) => {
+        setSec(ev.target.value)
     }
 
     return (
@@ -129,13 +126,13 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
             </div>
             <div style={{ flexGrow: 6 }}>
                 <label htmlFor="sectSelect">ตอนเรียน : </label>
-                <select name="section" id="sectSelect" onChange={setSect}>
-                    {props.sects.map((sect) => <option value={sect}>{sect}</option>)}
+                <select name="section" id="sectSelect" value={sec} onChange={handleSecChange}>
+                    {sortedSec.map((sect) => <option key={sect} value={sect}>{sect}</option>)}
                 </select>
             </div>
             <div style={{ flexGrow: 1 }}>
                 <button className="btn1" onClick={whenChosen}>
-                    {isChosen ? 'เลือกแล้ว' : 'เลือก'}
+                    {choosen ? 'เลือกแล้ว' : 'เลือก'}
                 </button>
             </div>
         </div>
@@ -143,15 +140,11 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
 }
 
 const BasketLabel = (props) => {
-    //var [chosens, setChosens] = useState(Now.chosens);
-    var nowChosens = useContext(nowChosensCtx).get;
-    const whenFinished = () => {
-        window.location.href = '/Subject/RegistConfirm'
-    }
+    const { data: pending_subjects } = usePendingSubject();
 
     return (
         <div className="basKetDiv">
-            <p id="totalchosen">เลือกแล้วจำนวน {nowChosens.length} วิชา</p>
+            <p id="totalchosen">เลือกแล้วจำนวน {pending_subjects?.length ?? 0} วิชา</p>
             <ConfirmLink to='/Subject/RegistConfirm'><button id="buttonchosen" >วิชาที่เลือก</button></ConfirmLink>
         </div>
     )

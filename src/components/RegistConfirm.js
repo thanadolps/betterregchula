@@ -4,10 +4,12 @@ import "./Registration.css";
 import "./RegistConfirm.css";
 
 import ContentBox from "./ContentBox";
+import { usePendingSubject } from "../hooks";
 
 var q = (id) => document.getElementById(id)
 
 //-------------------ลองข้อมูล-- แสดงวิชาที่เลือก--------------//
+/*
 var chosenCourses = [
     {
         "courseName": "Alchemy I",
@@ -28,16 +30,19 @@ var chosenCourses = [
         "selectedSect": "1"
     }
 ]
+*/
 
 
 const chosenCoursesCtx = createContext();
 const RegistConfirm = () => { //-----------main-------------------------------------------------------------//
-    var [nowChosens, setNowChosens] = useState([]); // global in this app for list of chosen courses
+    const { data: chosenCourses, isLoading } = usePendingSubject();
+    if (isLoading) { return null; }
 
-    var CourseRow_list = chosenCourses.map((courseData, index) => <CourseRow courseData={courseData} index={index + 1} />);
+    const CourseRow_list =
+        chosenCourses.map((courseData, index) => <CourseRow courseData={courseData} index={index + 1} />);
 
     return (
-        <chosenCoursesCtx.Provider value={{ get: nowChosens, set: setNowChosens }}>
+        <chosenCoursesCtx.Provider value={{}}>
             <div className="heading">รายวิชาที่ต้องการลงทะเบียนเรียน</div>
             <ContentBox title="รายวิชาที่ต้องการลงทะเบียนเรียน" content={
                 <>
@@ -76,10 +81,10 @@ const CourseRow = (props) => {
     return (
         <tr>
             <td>{props.index}</td>
-            <td>{courseData.courseNo}</td>
-            <td>{courseData.courseName}</td>
-            <td>{courseData.selectedSect}</td>
-            <td>{courseData.credits}</td>
+            <td>{courseData.subject.id}</td>
+            <td>{courseData.subject.name_english}</td>
+            <td>{courseData.number}</td>
+            <td>{courseData.subject.credit}</td>
             <td><button>ลบ</button></td>
         </tr>
     )
