@@ -39,7 +39,7 @@ function App() {
       return "";
     }
     if (error?.response?.status === 404) {
-      return "No match!";
+      return "Not match!";
     }
     return error?.message || "An Error Occured";
   }, [error])
