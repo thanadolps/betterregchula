@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;0,300;1,100&display=swap');
+
+.contentcontainer1{
+    font-family: 'Kanit',sans-serif;
+  }
+.content1{
+    width: 1200px;
+    height: 800px;
+    background-color: white;
+    z-index: 0;
+    position: absolute;
+    left: 150px;
+    top: 200px;
+    border-radius: 30px;
+    box-shadow: 1px 1px 18px 3px rgba(0, 0, 0, 0.24);
+}
+.headercontent1{
+    padding-top:20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+    /*height: 150px;*/
+    border-radius: 20px 20px 0px 0px;
+    background-color: #FE9A9A;
+}
+  .announcementbox1{
+    width: 400px;
+    height: 53px;
+    padding: 0px 6px;
+    margin: 28px 0 0px 40px;
+    background: #D56A71;
+    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: Kanit, sans-serif;
+    
+}
+  
+.announcementbox1 #announceicon1{
+    flex:30%;
+    display: grid;
+    place-items: center;
+    color:white;
+    
+}
+.announcementbox1 #announcetitle1{
+    flex:70%;
+    font-size: 20px;
+    text-align: center;
+    color:white;
+}
+
+/*------------*/
+.contentDiv1{
+    
+}

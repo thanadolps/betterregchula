@@ -5,6 +5,7 @@ import "./RegistConfirm.css";
 
 import ContentBox from "./ContentBox";
 import { usePendingSubject, useSetPendingSubject } from "../hooks";
+import { Link } from "react-router-dom";
 
 var q = (id) => document.getElementById(id)
 
@@ -55,7 +56,7 @@ const RegistConfirm = () => { //-----------main---------------------------------
             <ContentBox title="รายวิชาที่ต้องการลงทะเบียนเรียน" content={
                 <>
                     <TableCtn content={CourseRow_list} />
-
+                    <BackBtn />
                 </>
             } />
 
@@ -69,12 +70,12 @@ export const TableCtn = (props) => {
         <div className="cardCtn" id="cardCtn">
             <table className="table1">
                 <tr>
-                    <th>ลำดับที่</th>
-                    <th>รหัสรายวิชา</th>
-                    <th>ชื่อย่อรายวิชา</th>
-                    <th>ตอนเรียน</th>
-                    <th>หน่วยกิต</th>
-                    {props?.noDelete || <th className="invisCell"></th>}
+                    <th className="cell1" style={{ width: '8%' }}>ลำดับที่</th>
+                    <th style={{ width: '30%' }}>รหัสรายวิชา</th>
+                    <th style={{ width: '32%' }}>ชื่อย่อรายวิชา</th>
+                    <th style={{ width: '10%' }}>ตอนเรียน</th>
+                    <th style={{ width: '10%' }}>หน่วยกิต</th>
+                    <th style={{ width: '10%' }} className="invisCell"></th>
                 </tr>
                 {props.content}
             </table>
@@ -93,10 +94,19 @@ export const CourseRow = (props) => {
             <td>{courseData.subject.name_english}</td>
             <td>{courseData.number}</td>
             <td>{courseData.subject.credit}</td>
-            {props?.noDelete || <td><button style={{ cursor: "pointer" }} onClick={props.onDeleteClick}>ลบ</button></td>}
+            {props?.noDelete || <td className="invisCell"><button className="removeBtn" style={{ cursor: "pointer" }} onClick={props.onDeleteClick}>ลบ</button></td>}
         </tr>
     )
 }
+
+const BackBtn = () => {
+    return (
+        <Link to="/Subject/Registration">
+            <button className="btn2">แก้ไข</button>
+        </Link >
+    )
+}
+
 
 //-----------------------------------------------------------------//
 

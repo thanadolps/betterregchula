@@ -111,9 +111,9 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
             setPendingSubject(out_sub);
         }
         else {
-            out_sub.splice(pending_subjects.indexOf(props), 1); //deletew 1 items at the index
-            console.log(out_sub);
-            setPendingSubject(out_sub);
+            const out_sub2 = out_sub.filter(x => x.subject_id !== props.courseNo)
+            console.log(out_sub2);
+            setPendingSubject(out_sub2);
         }
     }
 
@@ -123,27 +123,54 @@ const CourseCard = (props = { courseName: 'Cal I', courseNo: '23101', credits: 5
         setSec(ev.target.value)
     }
 
+    var cardColor = isRegistered ? "#f5fff8" : choosen ? '#fff5f8' : '#ffffff'
+    var cardTransform = choosen ? 'scale(1.02) translate(10px, 0)' : 'scale(1) translate(0, 0)'
+
     return (
-        <div className="card">
-            <div style={{ flexGrow: 3 }}>
+        <div className="card" style={{ backgroundColor: cardColor, transform: cardTransform }}>
+            <div style={{ width: '25%' }}>
                 <p>{props.courseName} {props.courseNo}</p>
             </div>
-            <div style={{ flexGrow: 3 }}>
-                <p>{props.credits} หน่วยกิต</p>
+            <div style={{ width: '15%', color: "#898989" }}>
+                <p>[{props.credits} หน่วยกิต]</p>
             </div>
-            <div style={{ flexGrow: 6 }}>
-                <label htmlFor="sectSelect">ตอนเรียน : </label>
-                <select name="section" id="sectSelect" value={sec} onChange={handleSecChange}>
-                    {sortedSec.map((sect) => <option key={sect} value={sect}>{sect}</option>)}
-                </select>
+            <div style={{ width: '45%' }}>
+                <label htmlFor="sectSelect">ตอนเรียน : &nbsp;</label>
+                <form className="fix-sect">
+                    <select name="section" id="sectSelect" className="sectSelect" onChange={setSec} disabled={isRegistered || choosen}>
+                        {sortedSec.map((sect) => <option value={sect}>{sect}</option>)}
+                    </select>
+                </form>
             </div>
-            <div style={{ flexGrow: 1 }}>
+            <div style={{ width: '15%' }}>
                 <button className="btn1" onClick={whenChosen} disabled={isRegistered}>
                     {isRegistered ? 'ลงแล้ว' : choosen ? 'เลือกแล้ว' : 'เลือก'}
                 </button>
             </div>
         </div>
     )
+    /*
+        return (
+            <div className="card">
+                <div style={{ flexGrow: 3 }}>
+                    <p>{props.courseName} {props.courseNo}</p>
+                </div>
+                <div style={{ flexGrow: 3 }}>
+                    <p>{props.credits} หน่วยกิต</p>
+                </div>
+                <div style={{ flexGrow: 6 }}>
+                    <label htmlFor="sectSelect">ตอนเรียน : </label>
+                    <select name="section" id="sectSelect" value={sec} onChange={handleSecChange}>
+                        {sortedSec.map((sect) => <option key={sect} value={sect}>{sect}</option>)}
+                    </select>
+                </div>
+                <div style={{ flexGrow: 1 }}>
+                    <button className="btn1" onClick={whenChosen} disabled={isRegistered}>
+                        {isRegistered ? 'ลงแล้ว' : choosen ? 'เลือกแล้ว' : 'เลือก'}
+                    </button>
+                </div>
+            </div>
+        )*/
 }
 
 const BasketLabel = () => {
@@ -151,12 +178,11 @@ const BasketLabel = () => {
 
     return (
         <div className="basKetDiv">
-            <p id="totalchosen">เลือกแล้วจำนวน {pending_subjects?.length ?? 0} วิชา</p>
-            {pending_subjects.length > 0 ?
-                <ConfirmLink to='/Subject/RegistConfirm'><button id="buttonchosen" >วิชาที่เลือก</button></ConfirmLink>
-                : <button id="buttonchosen" style={{ cursor: "auto", color: "gray" }}>ไม่มีวิชาที่เลือก</button>
+            <p>เลือกแล้วจำนวน {pending_subjects?.length ?? 0} วิชา</p>
+            {pending_subjects.length > 0 &&
+                <ConfirmLink to='/Subject/RegistConfirm'><button id="buttonchosen" className="finishBtn" >วิชาที่เลือก {'>'}</button></ConfirmLink>
             }
-        </div>
+        </div >
     )
 }
 
